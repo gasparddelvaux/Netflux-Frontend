@@ -1,0 +1,36 @@
+<h1>Liste des films disponibles</h1>
+<h2>Les films récents possèdent un fond bleu.</h2>
+<div class="header-buttons">
+    <button (click)="toggleWelcome()" class="big-button">Retourner l'écran d'accueil</button>
+    <button (click)="showAddForm = true" class="big-button">Ajouter un film</button>
+</div>
+<table>
+    <tr>
+        <th style="width: 5%;">#</th>
+        <th style="width: 5%;">Couverture</th>
+        <th style="width: 20%;">Titre</th>
+        <th style="width: 20%;">Réalisateur</th>
+        <th style="width: 10%;">Année</th>
+        <th style="width: 30%;">Synopsis</th>
+        <th style="width: 10%;">Actions</th>
+    </tr>
+    @for (film of films; track film.id) {
+        <tr [class.blue]="film.annee >= 2000">
+            <td>{{film.id}}</td>
+            <td><img src="{{film.cover}}" alt=""></td>
+            <td>{{film.nom}}</td>
+            <td>{{film.realisateur}}</td>
+            <td>{{film.annee}}</td>
+            <td>{{film.synopsis}}</td>
+            <td>
+                <button class="action_button" (click)="selectFilm(film)">Modifier</button>
+                <button class="action_button" (click)="deleteFilm(film)">Supprimer</button>
+            </td>
+        </tr>
+    }
+</table>
+@if(showAddForm) {
+    <app-film-form (createEmitter)="addFilm($event)"/>
+} @else if(selectedFilm) {
+    <app-film-form (createEmitter)="addFilm($event)" (editEmitter)="editFilm($event)" [selectedFilm]="selectedFilm" />
+} 
