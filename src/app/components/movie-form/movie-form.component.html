@@ -1,0 +1,38 @@
+<div class="modal-overlay">
+    <div class="modal">
+        <h2>@if(selectedMovie.id) { Modifier } @else { Créer } un film</h2>
+        <div class="form">
+            <div class="input">
+                <label for="cover">Couverture</label>
+                <input type="text" id="cover" name="cover" [(ngModel)]="selectedMovie.cover">
+            </div>
+            <div class="input">
+                <label for="nom">Nom</label>
+                <input type="text" id="nom" name="nom" [(ngModel)]="selectedMovie.name">
+            </div>
+            <div class="input">
+                <label for="realisateur">Réalisateur</label>
+                <input type="text" id="realisateur" name="realisateur" [(ngModel)]="selectedMovie.director">
+            </div>
+            <div class="input">
+                <label for="annee">Année</label>
+                <input type="number" id="annee" name="annee" [(ngModel)]="selectedMovie.year">
+            </div>
+            <div class="input">
+                <label for="synopsis">Synopsis</label>
+                <textarea id="synopsis" name="synopsis" [(ngModel)]="selectedMovie.synopsis" rows="4"></textarea>
+            </div>
+            @if(selectedMovie.id) {
+            <div class="times">
+                <p>Création: {{ selectedMovie.created_at | date:'dd/MM/yyyy – HH:mm' }}</p>
+                <p>Dernière modification: {{ selectedMovie.updated_at | date:'dd/MM/yyyy – HH:mm' }}</p>
+            </div>
+            }
+            @if(selectedMovie.id) {
+                <button type="button" (click)='edit()'>Editer</button>
+            } @else {
+                <button type="button" (click)='add()'>Créer</button>
+            }
+        </div>
+    </div>
+</div>

@@ -14,23 +14,23 @@
         <th style="width: 30%;">Synopsis</th>
         <th style="width: 10%;">Actions</th>
     </tr>
-    @for (film of films; track film.id) {
-        <tr [class.blue]="film.annee >= 2000">
-            <td>{{film.id}}</td>
-            <td><img src="{{film.cover}}" alt=""></td>
-            <td>{{film.nom}}</td>
-            <td>{{film.realisateur}}</td>
-            <td>{{film.annee}}</td>
-            <td>{{film.synopsis}}</td>
+    @for (movie of movies; track movie.id) {
+        <tr [class.blue]="movie.year >= 2000">
+            <td>{{movie.id}}</td>
+            <td><img src="{{movie.cover}}" alt=""></td>
+            <td>{{movie.name}}</td>
+            <td>{{movie.director}}</td>
+            <td>{{movie.year}}</td>
+            <td>{{movie.synopsis}}</td>
             <td>
-                <button class="action_button" (click)="selectFilm(film)">Modifier</button>
-                <button class="action_button" (click)="deleteFilm(film)">Supprimer</button>
+                <button class="action_button" (click)="selectMovie(movie)">Modifier</button>
+                <button class="action_button" (click)="deleteMovie(movie)">Supprimer</button>
             </td>
         </tr>
     }
 </table>
 @if(showAddForm) {
-    <app-film-form (createEmitter)="addFilm($event)"/>
-} @else if(selectedFilm) {
-    <app-film-form (createEmitter)="addFilm($event)" (editEmitter)="editFilm($event)" [selectedFilm]="selectedFilm" />
+    <app-movie-form (createEmitter)="addMovie($event)"/>
+} @else if(selectedMovie) {
+    <app-movie-form (createEmitter)="addMovie($event)" (editEmitter)="editMovie($event)" [selectedMovie]="selectedMovie" />
 } 

@@ -2,13 +2,13 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { WelcomeComponent } from './components/welcome/welcome.component';
-import { FilmFormComponent } from './components/film-form/film-form.component';
-import { FilmListComponent } from './components/film-list/film-list.component';
+import { MovieFormComponent } from './components/movie-form/movie-form.component';
+import { MovieListComponent } from './components/movie-list/movie-list.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, WelcomeComponent, FilmFormComponent, FilmListComponent],
+  imports: [CommonModule, RouterOutlet, WelcomeComponent, MovieFormComponent, MovieListComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
