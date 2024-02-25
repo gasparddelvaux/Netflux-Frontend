@@ -1,38 +1,57 @@
 <div class="modal-overlay">
     <div class="modal">
         <h2>@if(selectedMovie.id) { Modifier } @else { Créer } un film</h2>
-        <div class="form">
+        <form class="form" [formGroup]="filmForm">
             <div class="input">
                 <label for="cover">Couverture</label>
-                <input type="text" id="cover" name="cover" [(ngModel)]="selectedMovie.cover">
+                <input type="text" id="cover" name="cover" [(ngModel)]="selectedMovie.cover" formControlName="cover" />
+                <div *ngIf="filmForm.controls.cover.invalid && filmForm.controls.cover.touched" class="form-message">
+                    La couverture est requise.
+                </div>
             </div>
             <div class="input">
-                <label for="nom">Nom</label>
-                <input type="text" id="nom" name="nom" [(ngModel)]="selectedMovie.name">
+                <label for="name">Nom</label>
+                <input type="text" id="name" name="name" [(ngModel)]="selectedMovie.name" formControlName="name" />
+                <div *ngIf="filmForm.controls.name.invalid && filmForm.controls.name.touched" class="form-message">
+                    Le titre est requis.
+                </div>
             </div>
             <div class="input">
-                <label for="realisateur">Réalisateur</label>
-                <input type="text" id="realisateur" name="realisateur" [(ngModel)]="selectedMovie.director">
+                <label for="director">Réalisateur</label>
+                <input type="text" id="director" name="director" [(ngModel)]="selectedMovie.director" formControlName="director" />
+                <div *ngIf="filmForm.controls.director.invalid && filmForm.controls.director.touched" class="form-message">
+                    Le réalisateur est requis.
+                </div>
             </div>
             <div class="input">
-                <label for="annee">Année</label>
-                <input type="number" id="annee" name="annee" [(ngModel)]="selectedMovie.year">
+                <label for="year">Année</label>
+                <input type="number" id="year" name="year" [(ngModel)]="selectedMovie.year" formControlName="year" />
+                <div *ngIf="filmForm.controls.year.invalid && filmForm.controls.year.touched" class="form-message">
+                    L'année est requise et doit être supérieure à 1920.
+                </div>
             </div>
             <div class="input">
                 <label for="synopsis">Synopsis</label>
-                <textarea id="synopsis" name="synopsis" [(ngModel)]="selectedMovie.synopsis" rows="4"></textarea>
+                <textarea id="synopsis" name="synopsis" [(ngModel)]="selectedMovie.synopsis" rows="4" formControlName="synopsis"></textarea>
+                <div *ngIf="filmForm.controls.synopsis.invalid && filmForm.controls.synopsis.touched" class="form-message">
+                    Le synopsis est requis et doit faire minimum 5 caractères.
+                </div>
             </div>
             @if(selectedMovie.id) {
             <div class="times">
-                <p>Création: {{ selectedMovie.created_at | date:'dd/MM/yyyy – HH:mm' }}</p>
-                <p>Dernière modification: {{ selectedMovie.updated_at | date:'dd/MM/yyyy – HH:mm' }}</p>
+                <p>
+                    Création: {{ selectedMovie.created_at | date : "dd/MM/yyyy – HH:mm" }}
+                </p>
+                <p>
+                    Dernière modification:
+                    {{ selectedMovie.updated_at | date : "dd/MM/yyyy – HH:mm" }}
+                </p>
             </div>
-            }
-            @if(selectedMovie.id) {
-                <button type="button" (click)='edit()'>Editer</button>
+            } @if(selectedMovie.id) {
+            <button type="button" (click)="edit()" [disabled]="!filmForm.valid">Editer</button>
             } @else {
-                <button type="button" (click)='add()'>Créer</button>
+            <button type="button" (click)="add()" [disabled]="!filmForm.valid">Créer</button>
             }
-        </div>
+        </form>
     </div>
 </div>

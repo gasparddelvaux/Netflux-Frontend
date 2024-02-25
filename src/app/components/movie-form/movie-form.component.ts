@@ -1,16 +1,25 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Movie } from '../../interfaces/movie.interface';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-movie-form',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, ReactiveFormsModule],
   templateUrl: './movie-form.component.html',
   styleUrl: './movie-form.component.scss'
 })
 export class MovieFormComponent {
+
+  filmForm = new FormGroup({
+    cover: new FormControl('', Validators.required),
+    name: new FormControl('', Validators.required),
+    synopsis: new FormControl('', [Validators.required, Validators.minLength(5)]),
+    year: new FormControl('', [Validators.required, Validators.min(1896)]),
+    director: new FormControl('', Validators.required)
+  });
+
   @Output() createEmitter = new EventEmitter();
   @Output() editEmitter = new EventEmitter();
   @Input() selectedMovie: Movie = {
