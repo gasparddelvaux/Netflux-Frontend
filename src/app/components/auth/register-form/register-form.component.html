@@ -1,0 +1,38 @@
+
+<div class="login-form">
+  <form class="form" [formGroup]="registerForm">
+    <h3>S'enregistrer</h3>
+    <div class="form-group">
+      <label for="name">Nom</label>
+      <input type="text" placeholder="Jhon Doe" id="name" formControlName="name">
+      <div *ngIf="registerForm.controls.name.invalid && registerForm.controls.name.touched" class="form-message">
+        Le nom n'est pas valide.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="email">E-mail</label>
+      <input type="text" placeholder="jhon.doe@gmail.com" id="email" formControlName="email">
+      <div *ngIf="registerForm.controls.email.invalid && registerForm.controls.email.touched" class="form-message">
+        L'adresse e-mail n'est pas valide.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="password">Mot de passe</label>
+      <input type="password" placeholder="monsupermotdepasse123@" id="password" formControlName="password">
+      <div *ngIf="registerForm.controls.password.invalid && registerForm.controls.password.touched" class="form-message">
+        Le mot de passe n'est pas valide.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="password_confirmation">Confirmer le mot de passe</label>
+      <input type="password" placeholder="monsupermotdepasse123@" id="password_confirmation" formControlName="password_confirmation">
+      <div *ngIf="registerForm.errors?.['confirmPassword'] && registerForm.controls.password_confirmation.touched" class="form-message">
+        Les mots de passe ne correspondent pas.
+      </div>
+    </div>
+    <div class="form-submit">
+      <a routerLink="/login" routerLinkActive="active" ariaCurrentWhenActive="page">Déjà un compte ? <span>Se connecter</span></a>
+      <button type="button" [disabled]="!registerForm.valid" (click)="register()">S'enregistrer</button>
+    </div>
+  </form>
+</div>

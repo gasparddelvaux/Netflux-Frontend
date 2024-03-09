@@ -1,8 +1,8 @@
 <h1>Liste des films disponibles</h1>
 <h2>Les films récents possèdent un fond bleu.</h2>
 <div class="header-buttons">
-    <button (click)="toggleWelcome()" class="big-button">Retourner l'écran d'accueil</button>
-    <button (click)="showAddForm = true" class="big-button">Ajouter un film</button>
+    <a routerLink="/" routerLinkActive="active" ariaCurrentWhenActive="page" class="big-button">Retourner l'écran d'accueil</a>
+    <a (click)="showAddForm = true" class="big-button">Ajouter un film</a>
 </div>
 <table>
     <tr>
@@ -33,4 +33,4 @@
     <app-movie-form (createEmitter)="addMovie($event)"/>
 } @else if(selectedMovie) {
     <app-movie-form (createEmitter)="addMovie($event)" (editEmitter)="editMovie($event)" [selectedMovie]="selectedMovie" />
-} 
+}

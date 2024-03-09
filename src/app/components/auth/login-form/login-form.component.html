@@ -1,0 +1,24 @@
+
+<div class="login-form">
+  <form class="form" [formGroup]="loginForm">
+    <h3>Se connecter</h3>
+    <div class="form-group">
+      <label for="email">E-mail</label>
+      <input type="text" placeholder="jhon.doe@gmail.com" id="email" formControlName="email">
+      <div *ngIf="loginForm.controls.email.invalid && loginForm.controls.email.touched" class="form-message">
+        L'adresse e-mail n'est pas valide.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="password">Mot de passe</label>
+      <input type="password" placeholder="monsupermotdepasse123@" id="password" formControlName="password">
+      <div *ngIf="loginForm.controls.password.invalid && loginForm.controls.password.touched" class="form-message">
+        Le mot de passe n'est pas valide.
+      </div>
+    </div>
+    <div class="form-submit">
+      <a routerLink="/register" routerLinkActive="active" ariaCurrentWhenActive="page">Pas de compte ? <span>S'enregistrer</span></a>
+      <button type="button" [disabled]="!loginForm.valid" (click)="login()">Se connecter</button>
+    </div>
+  </form>
+</div>

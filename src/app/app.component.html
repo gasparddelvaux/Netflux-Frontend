@@ -2,9 +2,5 @@
   <img src="/assets/logo.png" alt="">
 </div>
 <div class="content">
-  @if(welcome == true) {
-    <app-welcome (toggle)="toggleWelcome()"></app-welcome>
-  } @else {
-    <app-movie-list (toggle)="toggleWelcome()"></app-movie-list>
-  }
+  <router-outlet></router-outlet>
 </div>

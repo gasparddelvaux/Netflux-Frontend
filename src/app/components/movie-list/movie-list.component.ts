@@ -1,24 +1,18 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { MovieService } from '../../movie.service';
+import { MovieService } from '../../services/movie.service';
 import { Movie } from '../../interfaces/movie.interface'
 import { MovieFormComponent } from '../movie-form/movie-form.component';
 import { ToastRef, ToastrService } from 'ngx-toastr';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-movie-list',
   standalone: true,
-  imports: [MovieFormComponent],
+  imports: [MovieFormComponent, RouterLink, RouterLinkActive],
   templateUrl: './movie-list.component.html',
   styleUrl: './movie-list.component.scss'
 })
 export class MovieListComponent {
-
-  @Output() toggle = new EventEmitter<void>();
-
-  toggleWelcome() {
-    this.toggle.emit();
-  }
-
   movies: Movie[] = [];
 
   constructor(private movieService: MovieService, private toastr: ToastrService) {}
@@ -28,7 +22,14 @@ export class MovieListComponent {
   }
 
   loadMovies() {
-    this.movieService.getMovies().subscribe(movies => this.movies = movies);
+    this.movieService.getMovies().subscribe({
+      next: (response) => {
+        this.movies = Object.values(response)
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
   }
 
   showAddForm = false;
