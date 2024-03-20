@@ -75,3 +75,21 @@ img {
     margin-top: 0.3rem;
     font-size: 1rem;
 }
+
+.logout {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+}
+
+.logout > a {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #DC1A28;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+}

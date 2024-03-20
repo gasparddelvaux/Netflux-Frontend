@@ -22,6 +22,7 @@ export class MovieFormComponent {
 
   @Output() createEmitter = new EventEmitter();
   @Output() editEmitter = new EventEmitter();
+  @Output() cancelEmitter = new EventEmitter();
   @Input() selectedMovie: Movie = {
     id: 0,
     name: '',
@@ -35,6 +36,10 @@ export class MovieFormComponent {
 
   ngOnInit() {
     this.selectedMovie = this.clone(this.selectedMovie);
+  }
+
+  cancel() {
+    this.cancelEmitter.emit();
   }
 
   add() {

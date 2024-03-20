@@ -3,7 +3,7 @@ import { MovieService } from '../../services/movie.service';
 import { Movie } from '../../interfaces/movie.interface'
 import { MovieFormComponent } from '../movie-form/movie-form.component';
 import { ToastRef, ToastrService } from 'ngx-toastr';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-movie-list',
@@ -15,7 +15,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 export class MovieListComponent {
   movies: Movie[] = [];
 
-  constructor(private movieService: MovieService, private toastr: ToastrService) {}
+  constructor(private movieService: MovieService, private toastr: ToastrService, private router: Router) {}
 
   ngOnInit() {
     this.loadMovies();
@@ -34,6 +34,11 @@ export class MovieListComponent {
 
   showAddForm = false;
   selectedMovie?: Movie;
+
+  closeForm() {
+    this.showAddForm = false;
+    this.selectedMovie = undefined;
+  }
 
   addMovie(film: Movie) {
     this.movieService.addMovie(film).subscribe({
@@ -93,5 +98,11 @@ export class MovieListComponent {
         this.toastr.error('Oups !', 'Le film n\'a pas pu être supprimé.');
       }
     });
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+    this.toastr.success('Déconnexion', 'Vous avez été déconnecté.');
+    this.router.navigate(['/login']);
   }
 }

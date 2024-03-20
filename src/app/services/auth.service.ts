@@ -24,14 +24,17 @@ export class AuthService {
       })
     };
     return this.http.post<verifyTokenResponse>('http://127.0.0.1:7854/api/verifyToken', null, httpOptions).pipe(
-      map(response => {
-        if(response.type == 'error'){
-          return false;
-        }else{
+      map((response) => {
+        if(response.type == 'success') {
           return true;
+        } else {
+          return false;
         }
       }),
-      catchError(error => of(false))
+      catchError((error) => {
+        console.log(error);
+        return of(false);
+      })
     );
   }
 

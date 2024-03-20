@@ -30,7 +30,11 @@
     }
 </table>
 @if(showAddForm) {
-    <app-movie-form (createEmitter)="addMovie($event)"/>
+    <app-movie-form (createEmitter)="addMovie($event)" (cancelEmitter)="closeForm()" />
 } @else if(selectedMovie) {
-    <app-movie-form (createEmitter)="addMovie($event)" (editEmitter)="editMovie($event)" [selectedMovie]="selectedMovie" />
+    <app-movie-form (createEmitter)="addMovie($event)" (editEmitter)="editMovie($event)" (cancelEmitter)="closeForm()" [selectedMovie]="selectedMovie" />
 }
+
+<div class="logout">
+    <a (click)="logout()">Se déconnecter</a>
+</div>
