@@ -54,7 +54,6 @@
         <label for="director_id" class="text-sm font-medium text-slate-900"
           >Réalisateur</label
         >
-        <!-- select -->
         <select
           id="director_id"
           name="director_id"
@@ -69,14 +68,6 @@
           }}</option>
           }
         </select>
-        <!-- <input
-          type="text"
-          id="director"
-          name="director"
-          [(ngModel)]="selectedMovie.director"
-          formControlName="director"
-          class="w-full py-1.5 px-2.5 rounded-md border-0 text-slate-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-400 focus:outline-none"
-        /> -->
         <div
           *ngIf="
             filmForm.controls.director_id.invalid &&

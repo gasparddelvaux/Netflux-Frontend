@@ -28,7 +28,6 @@ export class adminGuard {
     | boolean
     | UrlTree {
     return this.userService.getInfo().then((response) => {
-      console.log(response.data);
       if (
         response.data.user.role === 'admin' ||
         response.data.user.role === 'superadmin'

@@ -6,6 +6,7 @@ import { ToastRef, ToastrService } from 'ngx-toastr';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { MovieDetailsComponent } from '../movie-details/movie-details.component';
 import { LoaderComponent } from '../../misc/loader/loader.component';
+import { UserService } from '../../../services/user/user.service';
 
 @Component({
   selector: 'app-movie-list',

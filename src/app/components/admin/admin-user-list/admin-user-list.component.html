@@ -1,1 +1,181 @@
-<p>admin-user-list works!</p>
+<div
+  class="bg-slate-100 rounded-md shadow-md p-6 mb-6 flex justify-between items-center"
+>
+  <h1 class="text-2xl text-slate-900 mb-2">Liste des utilisateurs.</h1>
+  <input
+    type="text"
+    (keyup.enter)="onSearch($event)"
+    placeholder="Rechercher dans les utilisateurs..."
+    class="py-1.5 px-2.5 rounded-md border-0 text-slate-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-400 focus:outline-none"
+  />
+</div>
+<div class="grid grid-cols-3 gap-4">
+  @if(users.length != 0) { @for (user of users; track user.id) {
+  <div class="bg-slate-100 w-full rounded-md shadow-md">
+    <div class="p-4 flex flex-col">
+      <h1 class="text-2xl text-slate-900 font-semibold mb-2">
+        {{ user.name }}
+      </h1>
+      <ul class="flex gap-1 flex-col mb-2">
+        <li class="text-slate-900">E-mail: <span class="font-medium">{{ user.email }}</span></li>
+        <li class="text-slate-900">Rôle: <span class="font-medium">{{ capitalizeFirstLetter(user.role) }}</span></li>
+        <li class="text-slate-900">Banni: <span class="font-medium">{{ user.banned ? 'Oui' : 'Non' }}</span></li>
+        <li class="text-slate-900">Nombre de films: <span class="font-medium">{{ user.movies.length }}</span><a href="" class="ms-2 bg-red-50 px-2 py-1 text-xs font-medium text-red-600 ring-1 ring-inset ring-red-500/10 rounded-md">Cliquez pour voir</a></li>
+        <li class="text-slate-900">Création: <span class="font-medium">{{ formatDate(user.created_at) }}</span></li>
+      </ul>
+      <hr class="mb-2 h-px bg-gray-300 border-0" />
+      <div class="flex gap-2">
+        <button
+          class="inline-flex w-fit items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon icon-tabler icons-tabler-outline icon-tabler-bolt me-2"
+          >
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M13 3l0 7l6 0l-8 11l0 -7l-6 0l8 -11" />
+          </svg>
+          Promouvoir en administrateur
+        </button>
+        <button
+          class="inline-flex w-fit items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon icon-tabler icons-tabler-outline icon-tabler-ban me-2"
+          >
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+            <path d="M5.7 5.7l12.6 12.6" />
+          </svg>
+          Bannir
+        </button>
+      </div>
+    </div>
+  </div>
+  } } @else {
+  <div class="bg-slate-100 rounded-md shadow-md col-span-5">
+    <p class="text-slate-900 text-left p-6">Aucun utilisateur trouvé.</p>
+  </div>
+  }
+</div>
+<div
+  class="bg-slate-100 rounded-md shadow-md p-6 my-6 flex justify-between items-center"
+>
+  <!-- Pagination -->
+  <div class="flex items-center gap-2">
+    <p class="text-slate-900">Utilisateurs par page:</p>
+    <select
+      class="bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10 focus:outline-none"
+      (change)="onItemsPerPageChange($event)"
+    >
+      <option value="5" [selected]="itemsPerPage == 5">5</option>
+      <option value="10" [selected]="itemsPerPage == 10">10</option>
+      <option value="15" [selected]="itemsPerPage == 15">15</option>
+      <option value="20" [selected]="itemsPerPage == 20">20</option>
+    </select>
+  </div>
+  <div class="flex items-center gap-2">
+    <p class="text-slate-900">Page {{ currentPage }} sur {{ totalPages }}</p>
+    <p class="text-slate-900">|</p>
+    <p class="text-slate-900">{{ fromTo }} sur {{ totalItems }}</p>
+    <button
+      (click)="onPageChange('start')"
+      class="bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left-pipe"
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M7 6v12" />
+        <path d="M18 6l-6 6l6 6" />
+      </svg>
+    </button>
+    <button
+      (click)="onPageChange('previous')"
+      class="bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left"
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M15 6l-6 6l6 6" />
+      </svg>
+    </button>
+    <button
+      (click)="onPageChange('next')"
+      class="bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right"
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M9 6l6 6l-6 6" />
+      </svg>
+    </button>
+    <button
+      (click)="onPageChange('end')"
+      class="bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right-pipe"
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M6 6l6 6l-6 6" />
+        <path d="M17 5v13" />
+      </svg>
+    </button>
+  </div>
+</div>
