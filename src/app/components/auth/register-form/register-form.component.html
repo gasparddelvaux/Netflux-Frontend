@@ -1,38 +1,42 @@
-
-<div class="login-form">
-  <form class="form" [formGroup]="registerForm">
-    <h3>S'enregistrer</h3>
-    <div class="form-group">
-      <label for="name">Nom</label>
-      <input type="text" placeholder="Jhon Doe" id="name" formControlName="name">
-      <div *ngIf="registerForm.controls.name.invalid && registerForm.controls.name.touched" class="form-message">
+<div class="flex justify-between gap-6">
+  <div class="bg-slate-100 w-1/2 p-6 rounded-md shadow-md">
+  <h3 class="text-2xl text-slate-900 mb-4">S'enregistrer</h3>
+  <form class="grid grid-cols-2 gap-x-4" [formGroup]="registerForm">
+    <div class="mb-4 flex flex-col gap-1">
+      <label for="name" class="text-sm font-medium text-slate-900">Nom</label>
+      <input type="text" placeholder="Jhon Doe" id="name" formControlName="name" class="w-full py-1.5 px-2.5 rounded-md border-0 text-slate-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-400 focus:outline-none">
+      <div *ngIf="registerForm.controls.name.invalid && registerForm.controls.name.touched" class="text-red-800 text-sm">
         Le nom n'est pas valide.
       </div>
     </div>
-    <div class="form-group">
-      <label for="email">E-mail</label>
-      <input type="text" placeholder="jhon.doe@gmail.com" id="email" formControlName="email">
-      <div *ngIf="registerForm.controls.email.invalid && registerForm.controls.email.touched" class="form-message">
+    <div class="mb-4 flex flex-col gap-1">
+      <label for="email" class="text-sm font-medium text-slate-900">E-mail</label>
+      <input type="text" placeholder="jhon.doe@gmail.com" id="email" formControlName="email" class="w-full py-1.5 px-2.5 rounded-md border-0 text-slate-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-400 focus:outline-none">
+      <div *ngIf="registerForm.controls.email.invalid && registerForm.controls.email.touched" class="text-red-800 text-sm">
         L'adresse e-mail n'est pas valide.
       </div>
     </div>
-    <div class="form-group">
-      <label for="password">Mot de passe</label>
-      <input type="password" placeholder="monsupermotdepasse123@" id="password" formControlName="password">
-      <div *ngIf="registerForm.controls.password.invalid && registerForm.controls.password.touched" class="form-message">
+    <div class="mb-4 flex flex-col gap-1">
+      <label for="password" class="text-sm font-medium text-slate-900">Mot de passe</label>
+      <input type="password" placeholder="monsupermotdepasse123@" id="password" formControlName="password" class="w-full py-1.5 px-2.5 rounded-md border-0 text-slate-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-400 focus:outline-none">
+      <div *ngIf="registerForm.controls.password.invalid && registerForm.controls.password.touched" class="text-red-800 text-sm">
         Le mot de passe n'est pas valide.
       </div>
     </div>
-    <div class="form-group">
-      <label for="password_confirmation">Confirmer le mot de passe</label>
-      <input type="password" placeholder="monsupermotdepasse123@" id="password_confirmation" formControlName="password_confirmation">
-      <div *ngIf="registerForm.errors?.['confirmPassword'] && registerForm.controls.password_confirmation.touched" class="form-message">
+    <div class="mb-4 flex flex-col gap-1">
+      <label for="password_confirmation" class="text-sm font-medium text-slate-900">Confirmer le mot de passe</label>
+      <input type="password" placeholder="monsupermotdepasse123@" id="password_confirmation" formControlName="password_confirmation" class="w-full py-1.5 px-2.5 rounded-md border-0 text-slate-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-400 focus:outline-none">
+      <div *ngIf="registerForm.errors?.['confirmPassword'] && registerForm.controls.password_confirmation.touched" class="text-red-800 text-sm">
         Les mots de passe ne correspondent pas.
       </div>
     </div>
-    <div class="form-submit">
-      <a routerLink="/login" routerLinkActive="active" ariaCurrentWhenActive="page">Déjà un compte ? <span>Se connecter</span></a>
-      <button type="button" [disabled]="!registerForm.valid" (click)="register()">S'enregistrer</button>
+    <div class="flex flex-col gap-2 col-span-2">
+      <a routerLink="/login" routerLinkActive="active" ariaCurrentWhenActive="page">Déjà un compte ? <span class="text-red-600 font-semibold">Se connecter</span></a>
+      <button type="button" [disabled]="!registerForm.valid" (click)="register()" class="text-left bg-red-600 py-1 px-3 rounded-lg text-white font-medium transition duration-200 ease-in-out hover:bg-red-800 w-fit cursor-pointer">S'enregistrer</button>
     </div>
   </form>
+  </div>
+  <div class="bg-slate-100 w-1/2 p-6 rounded-md shadow-md">
+    <app-auth-header></app-auth-header>
+  </div>
 </div>

@@ -1,24 +1,58 @@
-
-<div class="login-form">
-  <form class="form" [formGroup]="loginForm">
-    <h3>Se connecter</h3>
-    <div class="form-group">
-      <label for="email">E-mail</label>
-      <input type="text" placeholder="jhon.doe@gmail.com" id="email" formControlName="email">
-      <div *ngIf="loginForm.controls.email.invalid && loginForm.controls.email.touched" class="form-message">
-        L'adresse e-mail n'est pas valide.
+<div class="flex justify-between gap-6">
+  <div class="bg-slate-100 w-1/2 p-6 rounded-md shadow-md">
+    <form [formGroup]="loginForm">
+      <h3 class="text-2xl text-slate-900 mb-4">Se connecter</h3>
+      <div class="mb-4 flex flex-col gap-1">
+        <label for="email" class="text-sm font-medium text-slate-900">E-mail</label>
+        <input
+          type="text"
+          placeholder="jhon.doe@gmail.com"
+          id="email"
+          formControlName="email"
+          class="w-full py-1.5 px-2.5 rounded-md border-0 text-slate-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-400 focus:outline-none"
+        />
+        <div
+          *ngIf="
+            loginForm.controls.email.invalid && loginForm.controls.email.touched
+          "
+          class="text-red-800 text-sm"
+        >
+          L'adresse e-mail n'est pas valide.
+        </div>
       </div>
-    </div>
-    <div class="form-group">
-      <label for="password">Mot de passe</label>
-      <input type="password" placeholder="monsupermotdepasse123@" id="password" formControlName="password">
-      <div *ngIf="loginForm.controls.password.invalid && loginForm.controls.password.touched" class="form-message">
-        Le mot de passe n'est pas valide.
+      <div class="mb-4 flex flex-col gap-1">
+        <label for="password" class="text-sm font-medium text-slate-900">Mot de passe</label>
+        <input
+          type="password"
+          placeholder="monsupermotdepasse123@"
+          id="password"
+          formControlName="password"
+          class="w-full py-1.5 px-2.5 rounded-md border-0 text-slate-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-400 focus:outline-none"
+        />
+        <div
+          *ngIf="
+            loginForm.controls.password.invalid &&
+            loginForm.controls.password.touched
+          "
+          class="text-red-800 text-sm"
+        >
+          Le mot de passe n'est pas valide.
+        </div>
       </div>
-    </div>
-    <div class="form-submit">
-      <a routerLink="/register" routerLinkActive="active" ariaCurrentWhenActive="page">Pas de compte ? <span>S'enregistrer</span></a>
-      <button type="button" [disabled]="!loginForm.valid" (click)="login()">Se connecter</button>
-    </div>
-  </form>
+      <div class="flex flex-col gap-2">
+        <a
+          routerLink="/register"
+          routerLinkActive="active"
+          ariaCurrentWhenActive="page"
+          >Pas encore de compte ? <span class="text-red-600 font-semibold">S'enregistrer</span></a
+        >
+        <button type="button" [disabled]="!loginForm.valid" (click)="login()" class="text-left bg-red-600 py-1 px-3 rounded-lg text-white font-medium transition duration-200 ease-in-out hover:bg-red-800 w-fit cursor-pointer">
+          Se connecter
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="bg-slate-100 w-1/2 p-6 rounded-md shadow-md">
+    <app-auth-header></app-auth-header>
+  </div>
 </div>

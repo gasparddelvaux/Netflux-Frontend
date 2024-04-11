@@ -2,13 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { AuthService } from '../../../services/auth.service';
+import { AuthService } from '../../../services/auth/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { AuthHeaderComponent } from '../auth-header/auth-header.component';
 
 @Component({
   selector: 'app-login-form',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, RouterOutlet, RouterLink, RouterLinkActive, CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, RouterOutlet, RouterLink, RouterLinkActive, CommonModule, AuthHeaderComponent],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.scss'
 })

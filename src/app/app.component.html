@@ -1,6 +1,117 @@
-<div class="logo">
-  <img src="/assets/logo.png" alt="">
-</div>
-<div class="content">
-  <router-outlet></router-outlet>
+<div class="flex justify-center items-center flex-col gap-6 pt-20">
+  <div
+    class="bg-slate-100 w-3/5 px-6 pt-7 pb-6 rounded-md shadow-md flex justify-between items-center"
+  >
+    <img src="/assets/icon.svg" class="h-14" alt="" />
+    <ul ul class="flex items-center gap-6">
+      @if(isLogged) {
+      <li>
+        <a
+          class="text-lg text-slate-900 hover:font-medium"
+          routerLink="/"
+          routerLinkActive="font-medium"
+          [routerLinkActiveOptions]="{ exact: true }"
+          ariaCurrentWhenActive="page"
+          >Accueil</a
+        >
+      </li>
+      <li>
+        <a
+          class="text-lg text-slate-900 hover:font-medium"
+          routerLink="/movies"
+          routerLinkActive="font-medium"
+          ariaCurrentWhenActive="page"
+          >Mes films</a
+        >
+      </li>
+      <li>
+        <a
+          class="text-lg text-slate-900 hover:font-medium"
+          routerLink="/directors"
+          routerLinkActive="font-medium"
+          ariaCurrentWhenActive="page"
+          >Réalisateurs</a
+        >
+      </li>
+      <li>
+        <div class="relative mt-1">
+          <button (click)="showDropdown()">
+            <img src="/assets/profile.jpg" alt="" class="h-10 rounded-lg" />
+          </button>
+          <div
+            [class.absolute]="dropdownShown"
+            [class.hidden]="!dropdownShown"
+            class="right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-slate-100 shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none"
+          >
+            <div class="p-4">
+              <div class="flex gap-3 items-center mb-2">
+                <img src="/assets/profile.jpg" alt="" class="h-10 rounded-lg" />
+                <div class="flex flex-col">
+                  <p class="text-slate-900 font-medium">
+                    {{ this.userInfo.name }}
+                  </p>
+                  <p class="text-slate-900 text-sm">{{ this.userInfo.role }}</p>
+                </div>
+              </div>
+              <div class="flex flex-col gap-2">
+                <hr class="h-px bg-gray-300 border-0" />
+                @if(this.userInfo.role == 'admin' || this.userInfo.role ==
+                'superadmin') {
+                <div class="flex flex-col gap-2 bg-red-100 ring-1 ring-red-300 rounded-md p-2">
+                  <p class="text-slate-900 text-sm font-medium text-center">
+                    Administration
+                  </p>
+                  <a routerLink="/admin/movies"
+                  routerLinkActive="font-medium"
+                  ariaCurrentWhenActive="page" class="text-slate-900 text-sm hover:font-medium"
+                    >Films</a
+                  >
+                  <a routerLink="/admin/directors"
+                  routerLinkActive="font-medium"
+                  ariaCurrentWhenActive="page" class="text-slate-900 text-sm hover:font-medium"
+                    >Réalisateurs</a
+                  >
+                  <a routerLink="/admin/users"
+                  routerLinkActive="font-medium"
+                  ariaCurrentWhenActive="page" class="text-slate-900 text-sm hover:font-medium"
+                    >Utilisateurs</a
+                  >
+                </div>
+                <hr class="h-px bg-gray-300 border-0" />
+                }
+                <a
+                  (click)="logout()"
+                  class="text-slate-900 block text-sm cursor-pointer hover:font-medium"
+                  >Déconnexion</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      } @else {
+      <li>
+        <a
+          class="text-lg text-slate-900"
+          routerLink="/login"
+          routerLinkActive="font-medium"
+          ariaCurrentWhenActive="page"
+          >Connexion</a
+        >
+      </li>
+      <li>
+        <a
+          class="text-lg text-slate-900"
+          routerLink="/register"
+          routerLinkActive="font-medium"
+          ariaCurrentWhenActive="page"
+          >Inscription</a
+        >
+      </li>
+      }
+    </ul>
+  </div>
+  <div class="w-3/5">
+    <router-outlet></router-outlet>
+  </div>
 </div>

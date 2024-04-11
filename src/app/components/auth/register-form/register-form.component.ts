@@ -2,14 +2,15 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { AuthService } from '../../../services/auth.service';
+import { AuthService } from '../../../services/auth/auth.service';
 import { confirmPasswordValidator } from '../../../validators/confirm-password.validator';
 import { ToastrService } from 'ngx-toastr';
+import { AuthHeaderComponent } from '../auth-header/auth-header.component';
 
 @Component({
   selector: 'app-register-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, RouterLink, RouterLinkActive],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, RouterLink, RouterLinkActive, AuthHeaderComponent],
   templateUrl: './register-form.component.html',
   styleUrl: './register-form.component.scss'
 })
@@ -20,7 +21,7 @@ export class RegisterFormComponent {
   registerForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+      password: new FormControl('', [Validators.required, Validators.minLength(8)]),
       password_confirmation: new FormControl('', [Validators.required, Validators.minLength(8)]),
     }, {
       validators: confirmPasswordValidator
