@@ -23,7 +23,6 @@ export class DirectorListComponent {
   // Variables
   directors: Director[] = [];
   showAddForm = false;
-  selectedDirector?: Director;
   loading: boolean = false;
 
   currentPage: number = 1;
@@ -84,67 +83,10 @@ export class DirectorListComponent {
       (this.showAddForm = false);
   }
 
-  editDirector(director: Director) {
-    this.directorService
-      .updateDirector(director.id, director)
-      .then((response) => {
-        if (response.data.type == 'success') {
-          this.loadDirectors();
-          console.log('Réalisateur mis à jour avec succès!');
-          this.toastr.success(
-            'Magnifique !',
-            'Le réalisateur a bien été mis à jour.'
-          );
-        } else {
-          this.toastr.error(
-            'Oups !',
-            "Le réalisateur n'a pas pu être mis à jour."
-          );
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        this.toastr.error(
-          'Oups !',
-          "Le réalisateur n'a pas pu être mis à jour."
-        );
-      });
-    this.selectedDirector = undefined;
-  }
-
-  deleteDirector(director: Director) {
-    this.directorService
-      .deleteDirector(director.id)
-      .then((response) => {
-        if (response.data.type == 'success') {
-          this.loadDirectors();
-          console.log('Réalisateur supprimé avec succès!');
-          this.toastr.success(
-            'Magnifique !',
-            'Le réalisateur a bien été supprimé.'
-          );
-        } else {
-          this.toastr.error(
-            'Oups !',
-            "Le réalisateur n'a pas pu être supprimé."
-          );
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        this.toastr.error('Oups !', "Le réalisateur n'a pas pu être supprimé.");
-      });
-  }
-
   // Fonctions de gestion de l'affichage
-
-  selectDirector(director: Director) {
-    this.selectedDirector = director;
-  }
 
   closeForm() {
     this.showAddForm = false;
-    this.selectedDirector = undefined;
   }
 
   truncate(text: string) {

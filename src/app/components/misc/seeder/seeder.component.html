@@ -1,0 +1,25 @@
+<div
+  class="bg-slate-100 rounded-md shadow-md p-6 mb-6 flex justify-between items-center flex-wrap"
+>
+  <div class="w-1/2">
+    <h1 class="text-2xl text-slate-900 mb-2">Seeder la base de données</h1>
+    <p class="text-slate-900">
+      Récupère les films tendances depuis TMDB et les intègres dans la base de
+      données de l'application (uniquement pour le développement)
+    </p>
+  </div>
+  <button
+    (click)="startSeeder()"
+    class="w-fit bg-red-600 py-1 px-3 text-lg rounded-lg text-white font-medium transition duration-200 ease-in-out hover:bg-red-800"
+  >
+    Seeder la base de données
+  </button>
+  <p class="mt-6 mb-2">{{ infoBox }}</p>
+  <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-slate-300">
+    <div
+      class="bg-red-400 h-2.5 rounded-full"
+      [style.width.%]="progress"
+      [class.bg-green-400]="progress == 100"
+    ></div>
+  </div>
+</div>

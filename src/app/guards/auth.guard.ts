@@ -19,17 +19,21 @@ export class AuthGuard {
       this.toastr.error('Vous devez être connecté pour accéder à cette page.', 'Oups !');
       return this.router.createUrlTree(['/login']);
     } else {
-      return this.authService.verifyToken().pipe(
-        switchMap(isValid => {
-          if (isValid) {
-            return of(true);
-          } else {
-            localStorage.removeItem('token');
-            this.toastr.error('Votre session a expiré, veuillez vous reconnecter.', 'Oups !');
-            return of(false);
-          }
-        })
-      );
+      return this.authService.verifyToken()
+      .then(response => {
+        if (response.data.type == 'success') {
+          return true;
+        } else {
+          localStorage.removeItem('token');
+          this.toastr.error('Votre session a expiré, veuillez vous reconnecter.', 'Oups !');
+          return false;
+        }
+      })
+      .catch(error => {
+        console.log(error);
+        this.toastr.error('Une erreur est survenue, veuillez réessayer.', 'Oups !');
+        return false;
+      });
     }
   }
 }

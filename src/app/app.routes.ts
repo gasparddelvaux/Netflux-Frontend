@@ -10,6 +10,7 @@ import { AdminMovieListComponent } from './components/admin/admin-movie-list/adm
 import { AdminDirectorListComponent } from './components/admin/admin-director-list/admin-director-list.component';
 import { AdminUserListComponent } from './components/admin/admin-user-list/admin-user-list.component';
 import { adminGuard } from './guards/admin.guard';
+import { SeederComponent } from './components/misc/seeder/seeder.component';
 
 export const routes: Routes = [
   // Auth
@@ -19,8 +20,10 @@ export const routes: Routes = [
   { path: '', component: WelcomeComponent, canActivate: [AuthGuard] },
   { path: 'movies', component: MovieListComponent, canActivate: [AuthGuard]},
   { path: 'directors', component: DirectorListComponent, canActivate: [AuthGuard]},
+  { path: 'seeder', component: SeederComponent, canActivate: [AuthGuard]},
   // Admin
   { path: 'admin/movies', component: AdminMovieListComponent, canActivate: [AuthGuard, adminGuard]},
+  { path: 'admin/movies/:id', component: AdminMovieListComponent, canActivate: [AuthGuard, adminGuard]},
   { path: 'admin/directors', component: AdminDirectorListComponent, canActivate: [AuthGuard, adminGuard]},
   { path: 'admin/users', component: AdminUserListComponent, canActivate: [AuthGuard, adminGuard]},
 ];

@@ -1,7 +1,7 @@
 <div
   class="bg-slate-100 rounded-md shadow-md p-6 mb-6 flex justify-between items-center"
 >
-  <h1 class="text-2xl text-slate-900 mb-2">Liste des utilisateurs.</h1>
+  <h1 class="text-2xl text-slate-900 mb-2">Liste des utilisateurs</h1>
   <input
     type="text"
     (keyup.enter)="onSearch($event)"
@@ -14,11 +14,11 @@
   <div class="bg-slate-100 w-full rounded-md shadow-md">
     <div class="p-4 flex flex-col">
       <h1 class="text-2xl text-slate-900 font-semibold mb-2">
-        {{ user.name }}
+        {{ user.name }} <span class="bg-gray-50 px-2 py-1 text-base font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">#{{ user.id }}</span>
       </h1>
       <ul class="flex gap-1 flex-col mb-2">
         <li class="text-slate-900">E-mail: <span class="font-medium">{{ user.email }}</span></li>
-        <li class="text-slate-900">Rôle: <span class="font-medium">{{ capitalizeFirstLetter(user.role) }}</span></li>
+        <li class="text-slate-900">Rôle: <span class="font-medium">{{ displayRole(user.role) }}</span></li>
         <li class="text-slate-900">Banni: <span class="font-medium">{{ user.banned ? 'Oui' : 'Non' }}</span></li>
         <li class="text-slate-900">Nombre de films: <span class="font-medium">{{ user.movies.length }}</span><a href="" class="ms-2 bg-red-50 px-2 py-1 text-xs font-medium text-red-600 ring-1 ring-inset ring-red-500/10 rounded-md">Cliquez pour voir</a></li>
         <li class="text-slate-900">Création: <span class="font-medium">{{ formatDate(user.created_at) }}</span></li>
@@ -26,7 +26,7 @@
       <hr class="mb-2 h-px bg-gray-300 border-0" />
       <div class="flex gap-2">
         <button
-          class="inline-flex w-fit items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10"
+          (click)="grantOrRevokeAdmin(user)" class="inline-flex w-fit items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -43,10 +43,10 @@
             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
             <path d="M13 3l0 7l6 0l-8 11l0 -7l-6 0l8 -11" />
           </svg>
-          Promouvoir en administrateur
+          {{ user.role == 'admin' ? 'Révoquer' : 'Accorder' }} les droits d'administrateur
         </button>
         <button
-          class="inline-flex w-fit items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10"
+          (click)="banOrUnbanUser(user)" class="inline-flex w-fit items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -64,7 +64,7 @@
             <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
             <path d="M5.7 5.7l12.6 12.6" />
           </svg>
-          Bannir
+          {{ user.banned ? 'Débannir' : 'Bannir' }}
         </button>
       </div>
     </div>
@@ -179,3 +179,6 @@
     </button>
   </div>
 </div>
+@if(loading) {
+  <app-loader></app-loader>
+}

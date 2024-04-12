@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
+import { User } from '../../interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,12 @@ export class UserService {
         itemsPerPage: itemsPerPage,
         searchQuery: searchQuery
       }
+    });
+  }
+
+  updateUser(user: User) {
+    return axios.put(this.apiUrl + '/admin/users/' + user.id, user, {
+      headers: this.headers
     });
   }
 }

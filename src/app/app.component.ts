@@ -58,9 +58,11 @@ export class AppComponent {
     deleted_at: new Date(),
   };
 
-  ngOnInit() {
+  async ngOnInit() {
     this.checkLogin();
-    this.getUserInfo();
+    if (this.isLogged) {
+      this.userInfo = await this.getUserInfo();
+    }
   }
 
   checkLogin() {
@@ -71,10 +73,9 @@ export class AppComponent {
     }
   }
 
-  getUserInfo() {
-    this.userService.getInfo().then((response) => {
-      this.userInfo = response.data.user;
-    });
+  async getUserInfo(): Promise<User> {
+    const response = await this.userService.getInfo();
+    return response.data.user;
   }
 
   showDropdown() {
@@ -85,5 +86,18 @@ export class AppComponent {
     localStorage.removeItem('token');
     this.toastr.success('Déconnexion', 'Vous avez été déconnecté.');
     this.router.navigate(['/login']);
+  }
+
+  displayRole(role: string){
+    switch(role){
+      case 'superadmin':
+        return 'Super Administrateur';
+      case 'admin':
+        return 'Administrateur';
+      case 'guest':
+        return 'Utilisateur';
+      default:
+        return 'Inconnu';
+    }
   }
 }

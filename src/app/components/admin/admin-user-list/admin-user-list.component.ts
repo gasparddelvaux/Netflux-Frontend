@@ -6,11 +6,12 @@ import { User } from '../../../interfaces/user.interface';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { UserWithMovie } from '../../../interfaces/userWithMovie.interface';
+import { LoaderComponent } from '../../misc/loader/loader.component';
 
 @Component({
   selector: 'app-admin-user-list',
   standalone: true,
-  imports: [],
+  imports: [LoaderComponent],
   templateUrl: './admin-user-list.component.html',
   styleUrl: './admin-user-list.component.css',
 })
@@ -54,12 +55,69 @@ export class AdminUserListComponent {
       });
   }
 
-  capitalizeFirstLetter(string: string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+  updateUser(user: UserWithMovie) {
+    this.userService
+      .updateUser(user)
+      .then((response) => {
+        console.log(response);
+        this.toastr.success('Utilisateur mis à jour');
+        this.loadUsers();
+      })
+      .catch((error) => {
+        console.log(error);
+        this.toastr.error('Erreur lors de la mise à jour de l\'utilisateur');
+      });
+  }
+
+  banOrUnbanUser(user: UserWithMovie) {
+    const userToSend = this.clone(user);
+    if(userToSend.role == 'superadmin' || userToSend.role == 'admin') {
+      this.toastr.error('Vous ne pouvez pas bannir un administrateur');
+      return;
+    }
+    userToSend.banned = !userToSend.banned;
+    this.updateUser(userToSend);
+  }
+
+  grantOrRevokeAdmin(user: UserWithMovie) {
+    const userToSend = this.clone(user);
+    this.userService.getInfo().then((response) => {
+      console.log(response.data.user.role);
+      if (response.data.user.role == 'superadmin') {
+        if(user.role == 'admin') {
+          userToSend.role = 'guest';
+        }else{
+          userToSend.role = 'admin';
+        }
+        this.updateUser(userToSend);
+      } else {
+        this.toastr.error('Vous n\'avez pas les droits pour effectuer cette action');
+      }
+    }).catch((error) => {
+      console.log(error);
+      this.toastr.error('Erreur lors de la récupération de vos informations');
+    });
   }
 
   formatDate(date: Date) {
     return new Date(date).toLocaleString();
+  }
+
+  displayRole(role: string){
+    switch(role){
+      case 'superadmin':
+        return 'Super Administrateur';
+      case 'admin':
+        return 'Administrateur';
+      case 'guest':
+        return 'Utilisateur';
+      default:
+        return 'Inconnu';
+    }
+  }
+
+  private clone(value: any) {
+    return JSON.parse(JSON.stringify(value));
   }
 
   ngOnInit() {

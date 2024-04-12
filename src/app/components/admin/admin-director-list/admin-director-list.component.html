@@ -1,1 +1,205 @@
-<p>admin-director-list works!</p>
+<div
+  class="bg-slate-100 rounded-md shadow-md p-6 mb-6 flex justify-between items-center"
+>
+  <h1 class="text-2xl text-slate-900">Liste des réalisateurs</h1>
+  <div class="flex gap-2">
+    <input
+      type="text"
+      (keyup.enter)="onSearch($event)"
+      placeholder="Rechercher un réalisateur..."
+      class="py-1.5 px-2.5 rounded-md border-0 text-slate-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-400 focus:outline-none"
+    />
+    <a
+      (click)="showAddForm = true"
+      class="bg-red-600 py-1 px-3 rounded-lg text-white font-medium transition duration-200 ease-in-out hover:bg-red-800 cursor-pointer"
+      >Ajouter un réalisateur</a
+    >
+  </div>
+</div>
+<div class="grid grid-cols-5 gap-4">
+  @if(directors.length != 0) { @for (director of directors; track director.id) {
+  <div class="bg-slate-100 w-full rounded-md shadow-md">
+    <div class="p-4 flex flex-col justify-between h-full">
+      <h1 class="text-2xl text-slate-900 font-semibold">
+        {{ director.firstname + " " + director.lastname }}
+      </h1>
+      <div class="flex gap-2 mt-2">
+        <button
+          class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10"
+          (click)="selectDirector(director)"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon icon-tabler icons-tabler-outline icon-tabler-edit"
+          >
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path
+              d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"
+            />
+            <path
+              d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"
+            />
+            <path d="M16 5l3 3" />
+          </svg>
+        </button>
+        <button
+          class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10"
+          (click)="deleteDirector(director)"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon icon-tabler icons-tabler-outline icon-tabler-trash"
+          >
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M4 7l16 0" />
+            <path d="M10 11l0 6" />
+            <path d="M14 11l0 6" />
+            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  } } @else {
+  <div class="bg-slate-100 rounded-md shadow-md col-span-5">
+    <p class="text-slate-900 text-left p-6">Aucun réalisateur trouvé.</p>
+  </div>
+  }
+</div>
+<div
+  class="bg-slate-100 rounded-md shadow-md p-6 my-6 flex justify-between items-center"
+>
+  <!-- Pagination -->
+  <div class="flex items-center gap-2">
+    <p class="text-slate-900">Réalisateurs par page:</p>
+    <select
+      class="bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10 focus:outline-none"
+      (change)="onItemsPerPageChange($event)"
+    >
+      <option value="5" [selected]="itemsPerPage == 5">5</option>
+      <option value="10" [selected]="itemsPerPage == 10">10</option>
+      <option value="15" [selected]="itemsPerPage == 15">15</option>
+      <option value="20" [selected]="itemsPerPage == 20">20</option>
+    </select>
+  </div>
+  <div class="flex items-center gap-2">
+    <p class="text-slate-900">Page {{ currentPage }} sur {{ totalPages }}</p>
+    <p class="text-slate-900">|</p>
+    <p class="text-slate-900">{{ fromTo }} sur {{ totalItems }}</p>
+    <button
+      (click)="onPageChange('start')"
+      class="bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left-pipe"
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M7 6v12" />
+        <path d="M18 6l-6 6l6 6" />
+      </svg>
+    </button>
+    <button
+      (click)="onPageChange('previous')"
+      class="bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left"
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M15 6l-6 6l6 6" />
+      </svg>
+    </button>
+    <button
+      (click)="onPageChange('next')"
+      class="bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right"
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M9 6l6 6l-6 6" />
+      </svg>
+    </button>
+    <button
+      (click)="onPageChange('end')"
+      class="bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right-pipe"
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M6 6l6 6l-6 6" />
+        <path d="M17 5v13" />
+      </svg>
+    </button>
+  </div>
+</div>
+
+@if(showAddForm) {
+<app-director-form
+  (createEmitter)="addDirector($event)"
+  (cancelEmitter)="closeForm()"
+/>
+} @else if(selectedDirector) {
+<app-director-form
+  (createEmitter)="addDirector($event)"
+  (editEmitter)="editDirector($event)"
+  (cancelEmitter)="closeForm()"
+  [selectedDirector]="selectedDirector"
+/>
+} @if(loading) {
+<app-loader></app-loader>
+}

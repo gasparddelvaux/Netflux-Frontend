@@ -46,8 +46,9 @@
           ariaCurrentWhenActive="page"
           >Pas encore de compte ? <span class="text-red-600 font-semibold">S'enregistrer</span></a
         >
-        <button type="button" [disabled]="!loginForm.valid" (click)="login()" class="text-left bg-red-600 py-1 px-3 rounded-lg text-white font-medium transition duration-200 ease-in-out hover:bg-red-800 w-fit cursor-pointer">
-          Se connecter
+        <button type="button" [disabled]="!loginForm.valid" [disabled]="loading" (click)="login()" class="text-left bg-red-600 disabled:bg-red-300 py-1 px-3 rounded-lg text-white font-medium transition duration-200 ease-in-out hover:bg-red-800 w-fit cursor-pointer flex gap-2 items-center focus:outline-none">
+          @if(this.loading) {
+          <svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-loader-2 animate-spin"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3a9 9 0 1 0 9 9" /></svg>}Se connecter
         </button>
       </div>
     </form>
