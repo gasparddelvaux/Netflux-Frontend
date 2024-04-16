@@ -1,0 +1,33 @@
+<div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+<div
+  class="fixed z-50 top-0 left-0 flex justify-center items-center w-full min-h-screen"
+>
+  <div class="bg-slate-100 p-6 w-1/3 rounded-md shadow-md">
+    <div class="grid grid-cols-2 gap-4">
+      <div class="col-span-2">
+        <h2 class="text-2xl text-slate-900">
+          Voulez-vous vraiment {{ user?.banned ? 'débannir' : 'bannir' }} {{ user?.name }} ?
+        </h2>
+        <p class="mt-4">
+          {{ user?.banned ? 'L\'utilisateur pourra a nouveau se connecter à son compte.' : 'L\'utilisateur ne pourra plus se connecter à son compte.' }}
+        </p>
+      </div>
+
+      <button
+        type="button"
+        (click)="handleCancel()"
+        class="w-full bg-gray-600 py-1 px-3 rounded-lg text-white font-medium transition duration-200 ease-in-out hover:bg-gray-800 cursor-pointer"
+      >
+        Non, annuler
+      </button>
+
+      <button
+        type="button"
+        (click)="handleConfirm()"
+        class="w-full bg-red-600 py-1 px-3 rounded-lg text-white font-medium transition duration-200 ease-in-out hover:bg-red-800 cursor-pointer"
+      >
+        Je confirme
+      </button>
+    </div>
+  </div>
+</div>

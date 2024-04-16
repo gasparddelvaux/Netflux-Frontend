@@ -7,11 +7,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { UserWithMovie } from '../../../interfaces/userWithMovie.interface';
 import { LoaderComponent } from '../../misc/loader/loader.component';
+import { AdminBanModalComponent } from '../admin-ban-modal/admin-ban-modal.component';
 
 @Component({
   selector: 'app-admin-user-list',
   standalone: true,
-  imports: [LoaderComponent, RouterModule],
+  imports: [LoaderComponent, RouterModule, AdminBanModalComponent],
   templateUrl: './admin-user-list.component.html',
   styleUrl: './admin-user-list.component.css',
 })
@@ -25,6 +26,8 @@ export class AdminUserListComponent {
   // Variables
   users: UserWithMovie[] = [];
   loading: boolean = false;
+
+  banModal: UserWithMovie | undefined = undefined;
 
   currentPage: number = 1;
   totalItems: number = 0;
@@ -67,6 +70,11 @@ export class AdminUserListComponent {
         console.log(error);
         this.toastr.error('Erreur lors de la mise à jour de l\'utilisateur');
       });
+  }
+
+  confirmBanModal(user: UserWithMovie) {
+    this.banOrUnbanUser(user);
+    this.banModal = undefined;
   }
 
   banOrUnbanUser(user: UserWithMovie) {

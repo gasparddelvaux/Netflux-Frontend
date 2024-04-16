@@ -46,7 +46,7 @@
           {{ user.role == 'admin' ? 'Révoquer' : 'Accorder' }} les droits d'administrateur
         </button>
         <button
-          (click)="banOrUnbanUser(user)" class="inline-flex w-fit items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10"
+          (click)="banModal = user" class="inline-flex w-fit items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -181,4 +181,8 @@
 </div>
 @if(loading) {
   <app-loader></app-loader>
+}
+
+@if(banModal !== undefined) {
+  <app-admin-ban-modal (cancel)="banModal = undefined" (confirm)="confirmBanModal($event)" [user]="banModal"></app-admin-ban-modal>
 }
