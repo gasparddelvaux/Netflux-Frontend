@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LoaderComponent } from '../../misc/loader/loader.component';
 import { MovieWithUser } from '../../../interfaces/movieWithUser';
 import { MovieDetailsComponent } from '../../movies/movie-details/movie-details.component';
+import { UserService } from '../../../services/user/user.service';
 
 @Component({
   selector: 'app-admin-movie-list',
@@ -16,12 +17,13 @@ import { MovieDetailsComponent } from '../../movies/movie-details/movie-details.
 })
 export class AdminMovieListComponent {
 
-  constructor(private movieService: MovieService, private toastr: ToastrService, private route: ActivatedRoute) {}
+  constructor(private movieService: MovieService, private userService: UserService, private toastr: ToastrService, private route: ActivatedRoute) {}
 
   // Variables
   movies: MovieWithUser[] = [];
   loading: boolean = false;
   userId: number | undefined = undefined;
+  pageTitle: string = 'Liste de tous les films';
   selectedMovieDetails?: Movie;
 
   currentPage: number = 1;
@@ -55,6 +57,17 @@ export class AdminMovieListComponent {
       });
   }
 
+  getUserInfo(userId: number) {
+    this.userService.getInfoAdmin(userId)
+      .then(response => {
+        this.pageTitle = 'Liste des films de ' + response.data.name;
+      })
+      .catch(error => {
+        this.pageTitle = 'Utilisateur introuvable';
+        console.log(error);
+      });
+  }
+
   // Fonctions d'affichage
 
   closeDetails() {
@@ -79,6 +92,7 @@ export class AdminMovieListComponent {
       if(userId != null) {
         this.userId = parseInt(userId);
         this.loadMovies();
+        this.getUserInfo(this.userId);
       } else {
         this.userId = undefined;
         this.loadMovies();

@@ -72,8 +72,8 @@ export class LoginFormComponent {
           }
         })
         .catch((error) => {
-          if (error.error.message) {
-            this.toastr.error(error.error.message, 'Oups !');
+          if (error.response.data.message) {
+            this.toastr.error(error.response.data.message, 'Oups !');
           } else {
             this.toastr.error('Une erreur est survenue.', 'Oups !');
           }

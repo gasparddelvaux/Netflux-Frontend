@@ -22,6 +22,12 @@ export class UserService {
     });
   }
 
+  getInfoAdmin(id: number) {
+    return axios.get('http://127.0.0.1:7854/api/admin/userInfo/' + id, {
+      headers: this.headers,
+    });
+  }
+
   getUsers(currentPage: number, itemsPerPage: number, searchQuery: string) {
     return axios.get(this.apiUrl + '/admin/users', {
       headers: this.headers,

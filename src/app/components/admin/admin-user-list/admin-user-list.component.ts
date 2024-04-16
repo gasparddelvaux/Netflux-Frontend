@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { UserService } from '../../../services/user/user.service';
 import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { User } from '../../../interfaces/user.interface';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
@@ -11,7 +11,7 @@ import { LoaderComponent } from '../../misc/loader/loader.component';
 @Component({
   selector: 'app-admin-user-list',
   standalone: true,
-  imports: [LoaderComponent],
+  imports: [LoaderComponent, RouterModule],
   templateUrl: './admin-user-list.component.html',
   styleUrl: './admin-user-list.component.css',
 })

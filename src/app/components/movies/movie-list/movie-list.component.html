@@ -4,7 +4,12 @@
     <h2 class="text-lg text-slate-900">Vos films récents (> 2000) possèdent un fond bleu.</h2>
   </div>
   <div class="flex gap-2">
-    <input type="text" (keyup.enter)="onSearch($event)" placeholder="Rechercher dans vos films..." class="py-1.5 px-2.5 rounded-md border-0 text-slate-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-400 focus:outline-none">
+    <div class="flex items-center">
+      <input type="text" (keyup.enter)="onSearch($event)" placeholder="Rechercher..." class="py-1.5 px-2.5 rounded-s-lg border-0 text-slate-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-400 focus:outline-none">
+      <div class="bg-red-600 text-white flex items-center p-2 rounded-e-lg">
+        <svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-search"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
+      </div>
+    </div>
     <a (click)="showAddForm = true" class="bg-red-600 py-1 px-3 rounded-lg text-white font-medium transition duration-200 ease-in-out hover:bg-red-800 cursor-pointer">Ajouter un film dans votre liste</a>
   </div>
 

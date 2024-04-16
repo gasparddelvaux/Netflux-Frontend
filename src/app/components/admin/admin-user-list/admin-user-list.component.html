@@ -2,12 +2,12 @@
   class="bg-slate-100 rounded-md shadow-md p-6 mb-6 flex justify-between items-center"
 >
   <h1 class="text-2xl text-slate-900 mb-2">Liste des utilisateurs</h1>
-  <input
-    type="text"
-    (keyup.enter)="onSearch($event)"
-    placeholder="Rechercher dans les utilisateurs..."
-    class="py-1.5 px-2.5 rounded-md border-0 text-slate-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-400 focus:outline-none"
-  />
+  <div class="flex items-center">
+    <input type="text" (keyup.enter)="onSearch($event)" placeholder="Rechercher..." class="py-1.5 px-2.5 rounded-s-lg border-0 text-slate-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-400 focus:outline-none">
+    <div class="bg-red-600 text-white flex items-center p-2 rounded-e-lg">
+      <svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-search"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
+    </div>
+  </div>
 </div>
 <div class="grid grid-cols-3 gap-4">
   @if(users.length != 0) { @for (user of users; track user.id) {
@@ -20,7 +20,7 @@
         <li class="text-slate-900">E-mail: <span class="font-medium">{{ user.email }}</span></li>
         <li class="text-slate-900">Rôle: <span class="font-medium">{{ displayRole(user.role) }}</span></li>
         <li class="text-slate-900">Banni: <span class="font-medium">{{ user.banned ? 'Oui' : 'Non' }}</span></li>
-        <li class="text-slate-900">Nombre de films: <span class="font-medium">{{ user.movies.length }}</span><a href="" class="ms-2 bg-red-50 px-2 py-1 text-xs font-medium text-red-600 ring-1 ring-inset ring-red-500/10 rounded-md">Cliquez pour voir</a></li>
+        <li class="text-slate-900">Nombre de films: <span class="font-medium">{{ user.movies.length }}</span><a [routerLink]="['/admin/movies', user.id]" class="ms-2 bg-red-50 px-2 py-1 text-xs font-medium text-red-600 ring-1 ring-inset ring-red-500/10 rounded-md">Cliquez pour voir</a></li>
         <li class="text-slate-900">Création: <span class="font-medium">{{ formatDate(user.created_at) }}</span></li>
       </ul>
       <hr class="mb-2 h-px bg-gray-300 border-0" />
